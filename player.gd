@@ -17,7 +17,7 @@ func _ready():
 func _input(event: InputEvent):
 	if event.is_action_pressed("leftclick"):
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	if event.is_action_pressed("ui_accept"):
+	if event.is_action_pressed("ui_cancel"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 func _unhandled_input(event: InputEvent):
@@ -32,12 +32,13 @@ func _physics_process(delta):
 		velocity.y -= gravity * delta  # Now uses scalar gravity
 
 	# Jumping
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
 	# Movement
 	var input_dir = Input.get_vector("left", "right", "foward", "backward")
 	var direction = (cam.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	
 	
 	if direction:
 		velocity.x = direction.x * SPEED
