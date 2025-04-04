@@ -4,12 +4,10 @@ const SPEED = 10.0
 const JUMP_VELOCITY = 4.5
 const MOUSE_SENS = 0.25
 
-# Node References
-@onready var cam: Node3D = $arm
+@onready var cam: Node3D = $arm  # Ou la vraie caméra si différente
 @onready var gun_anim: AnimationPlayer = $arm/pistol/AnimationPlayer
 
-# Gravity as a scalar (float)
-var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")  # Directly get gravity value
+var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -27,20 +25,29 @@ func _unhandled_input(event: InputEvent):
 		rotate_y(deg_to_rad(-event.relative.x * MOUSE_SENS))
 
 func _physics_process(delta):
-	# Apply gravity (as a float to velocity.y)
 	if not is_on_floor():
-		velocity.y -= gravity * delta  # Now uses scalar gravity
+		velocity.y -= gravity * delta
 
-	# Jumping
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
-	# Movement
+	# ✅ Garder "foward" comme dans ton input map
 	var input_dir = Input.get_vector("left", "right", "foward", "backward")
-	var direction = (cam.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	
-	
-	if direction:
+
+	# ✅ Inversion corrigée ici
+	var cam_basis = cam.global_transform.basis
+	var forward = cam_basis.z  # <- plus de "-" ici
+	var right = cam_basis.x
+
+	# On garde le mouvement à plat
+	forward.y = 0
+	right.y = 0
+	forward = forward.normalized()
+	right = right.normalized()
+
+	var direction = (right * input_dir.x + forward * input_dir.y).normalized()
+
+	if direction.length() > 0:
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
 	else:
@@ -49,6 +56,5 @@ func _physics_process(delta):
 
 	move_and_slide()
 
-	# Shooting
 	if Input.is_action_just_pressed("leftclick") and gun_anim:
 		gun_anim.play("shoot")
