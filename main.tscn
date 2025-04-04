@@ -1,4 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://t2kpa1s6o4ab"]
+[gd_scene load_steps=5 format=3 uid="uid://t2kpa1s6o4ab"]
+
+[ext_resource type="PackedScene" uid="uid://bf00jdwea0p30" path="res://player.tscn" id="1_ig7tw"]
 
 [sub_resource type="Environment" id="Environment_7dm0k"]
 
@@ -23,3 +25,6 @@ mesh = SubResource("PlaneMesh_7dm0k")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_ig7tw")
+
+[node name="player" parent="." instance=ExtResource("1_ig7tw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.56595, 0)
