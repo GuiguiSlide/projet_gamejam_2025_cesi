@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://t2kpa1s6o4ab"]
+
+[sub_resource type="Environment" id="Environment_7dm0k"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_7dm0k")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50.376, 0)
