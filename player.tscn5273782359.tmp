@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://4korepacy1ha"]
+
+[ext_resource type="PackedScene" uid="uid://b65070k2us0br" path="res://PLAYERGAMEJAM.gltf" id="1_4flbx"]
+[ext_resource type="Script" uid="uid://cg57kvgqlkpkc" path="res://player.gd" id="1_onrkg"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_onrkg"]
+
+[node name="player" type="Node3D"]
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+script = ExtResource("1_onrkg")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+shape = SubResource("CapsuleShape3D_onrkg")
+
+[node name="arm" type="Node3D" parent="CharacterBody3D"]
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D/arm"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.431294, 0)
+
+[node name="blockbench_export" parent="." instance=ExtResource("1_4flbx")]
+transform = Transform3D(-0.0791899, 0, -0.99686, 0, 1, 0, 0.99686, 0, -0.0791899, 0.376974, 0.152253, 0.217728)
