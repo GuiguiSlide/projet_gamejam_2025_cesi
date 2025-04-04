@@ -1,5 +1,6 @@
 # projet_gamejam_2025_cesi
 Theme: Tower-Defence.
+Status(in dev)
 # Game
 Roguelite,Tower defence,FPS.
 Theme around a aquatic apocalypse.
