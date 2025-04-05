@@ -12,7 +12,7 @@ const TOWER_SCENE = preload("res://towertemplate.tscn")
 @onready var blue_filter: ColorRect = $arm/Camera3D/ColorRect
 @onready var health_label: Label = $arm/Camera3D/ui/health
 @onready var money_label: Label = $arm/Camera3D/ui/money
-
+var timer = Timer.new()
 var player_money: int = 100
 var player_health: int = 100
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -70,8 +70,9 @@ func _physics_process(delta):
 
 	move_and_slide()
 	
-	if Input.is_action_just_pressed("leftclick"):
+	if Input.is_action_pressed("leftclick"):
 		if current_weapon == "pistol":
+			timer.wait_time = 0.01  
 			shoot_projectile()
 		elif current_weapon == "wrench":
 			place_tower()

@@ -1,36 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://c3c5bjfrguo6l"]
+[gd_scene load_steps=2 format=3 uid="uid://c3c5bjfrguo6l"]
 
-[ext_resource type="PackedScene" uid="uid://b5qf8p75pagbp" path="res://clownfish.tscn" id="1_0mjir"]
 [ext_resource type="Script" uid="uid://cyjo7eqndso7f" path="res://summonner.gd" id="1_3hhbi"]
-[ext_resource type="PackedScene" uid="uid://bkn3jr3rlnuwn" path="res://orc.tscn" id="2_rsa6e"]
-[ext_resource type="PackedScene" uid="uid://dh7p1bd6otg4c" path="res://salmon.tscn" id="3_3hhbi"]
-[ext_resource type="PackedScene" uid="uid://dg7gisdh0g72g" path="res://shark.tscn" id="4_y2425"]
-[ext_resource type="PackedScene" uid="uid://dqccph5ly6pml" path="res://sunfish.tscn" id="5_gy15n"]
-[ext_resource type="PackedScene" uid="uid://d3804bbj5koec" path="res://whale.tscn" id="6_0qmju"]
 
 [node name="summonner" type="Node3D"]
 script = ExtResource("1_3hhbi")
-
-[node name="clownfish" parent="." instance=ExtResource("1_0mjir")]
-unique_name_in_owner = true
-visible = false
-
-[node name="orc" parent="." instance=ExtResource("2_rsa6e")]
-unique_name_in_owner = true
-visible = false
-
-[node name="salmon" parent="." instance=ExtResource("3_3hhbi")]
-unique_name_in_owner = true
-visible = false
-
-[node name="shark" parent="." instance=ExtResource("4_y2425")]
-unique_name_in_owner = true
-visible = false
-
-[node name="sunfish" parent="." instance=ExtResource("5_gy15n")]
-unique_name_in_owner = true
-visible = false
-
-[node name="whale" parent="." instance=ExtResource("6_0qmju")]
-unique_name_in_owner = true
-visible = false

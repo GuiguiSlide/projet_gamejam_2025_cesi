@@ -3,7 +3,7 @@ extends Node3D
 @onready var body = $StaticBody3D
 @onready var anim = $StaticBody3D/blockbench_export/AnimationPlayer
 
-var speed = 10.0
+var speed = 1.0
 var has_reached_end = false  # Flag to track path completion
 var instructions = [
 	{"type": "move", "distance": 12},
