@@ -1,6 +1,6 @@
 extends Node3D
 
-@onready var upper_part = $StaticBody3D/MeshInstance3D2
+@onready var upper_part = $StaticBody3D/blockbench_export/Node/all/gun
 var enemy: Node3D = null
 
 func _ready():
