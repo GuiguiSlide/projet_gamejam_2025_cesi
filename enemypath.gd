@@ -3,8 +3,8 @@ extends Node3D
 @onready var body = $StaticBody3D
 @onready var anim = $StaticBody3D/blockbench_export/AnimationPlayer
 
-var speed = 2.0
-var health = 100.0
+var speed = 10.0
+var has_reached_end = false  # Flag to track path completion
 var instructions = [
 	{"type": "move", "distance": 12},
 	{"type": "turn", "angle": 90},
@@ -36,32 +36,33 @@ var distance_moved = 0.0
 
 func _ready():
 	add_to_group("enemies")
-	# Set collision layers/masks (layer numbers depend on your project settings)
-	body.collision_layer = 3  # Enemies' layer
-	body.collision_mask = 1   # Set to detect tower's detection area
-
-	# Ensure the AnimationPlayer node is valid before attempting to play animations
-func take_damage(amount):
-	health -= amount
-	if health <= 0:
-		die()
+	body.collision_layer = 3
+	body.collision_mask = 1
 
 func die():
 	queue_free()
 
 func _physics_process(delta):
 	if current_instruction >= instructions.size():
+		if !has_reached_end:
+			has_reached_end = true
+			print("dmgtaken")
+			# Get player reference properly
+			var player = get_tree().get_first_node_in_group("player")
+			if player and player.has_method("take_damage"):
+				player.take_damage(10)
+			else:
+				push_error("Player or take_damage() method not found!")
+			queue_free()  # Remove enemy after completing path
 		return
-	anim.play("walk")
-
-	var instr = instructions[current_instruction]
 	
+	anim.play("walk")
+	var instr = instructions[current_instruction]
 	match instr.type:
 		"move":
 			var move_dist = speed * delta
 			var remaining = instr.distance - distance_moved
 			var actual_move = min(move_dist, remaining)
-			# Move along the node's local forward axis
 			translate(Vector3.FORWARD * actual_move)
 			distance_moved += actual_move
 			if distance_moved >= instr.distance:

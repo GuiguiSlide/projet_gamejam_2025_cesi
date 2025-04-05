@@ -7,7 +7,9 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ym83u"]
 
-[node name="player" type="CharacterBody3D"]
+[node name="player" type="CharacterBody3D" groups=["player"]]
+collision_layer = 2
+collision_mask = 128
 script = ExtResource("1_67vjv")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -34,6 +36,20 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.3020
 [node name="wrench" parent="arm/Camera3D" instance=ExtResource("3_hqtel")]
 unique_name_in_owner = true
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.384353, -0.205622, 0.375863)
+
+[node name="ui" type="CanvasLayer" parent="arm/Camera3D"]
+
+[node name="money" type="Label" parent="arm/Camera3D/ui"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "coins:100"
+
+[node name="health" type="Label" parent="arm/Camera3D/ui"]
+offset_left = 1001.0
+offset_top = 3.0
+offset_right = 1098.0
+offset_bottom = 66.0
+text = "HealthPoint:"
 
 [node name="projectile" parent="." instance=ExtResource("3_i3pqv")]
 unique_name_in_owner = true

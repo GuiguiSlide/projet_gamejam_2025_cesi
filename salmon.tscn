@@ -1,9 +1,10 @@
 [gd_scene load_steps=4 format=3 uid="uid://dh7p1bd6otg4c"]
 
 [ext_resource type="Script" uid="uid://dkoc1p3bdeab8" path="res://enemypath.gd" id="1_u0utl"]
-[ext_resource type="PackedScene" uid="uid://qdjhx5rvi28x" path="res://fishlv2.gltf" id="2_1vhn8"]
+[ext_resource type="PackedScene" uid="uid://qdjhx5rvi28x" path="res://modele/fishlv2.gltf" id="2_1vhn8"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_8xmgw"]
+radius = 3.0
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_u0utl")

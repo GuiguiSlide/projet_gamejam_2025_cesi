@@ -26,12 +26,15 @@ func update_aim(target_pos: Vector3):
 	target_pos.y = tower_pos.y  # Ignore vertical difference for aiming
 	upper_part.look_at(target_pos, Vector3.UP)
 
-func _on_detection_area_body_entered(body: Node):
+
+func _on_detection_area_body_entered(body: Node3D):
+	print("Enemy detected: ", body.name)
 	if body.is_in_group("enemies"):
 		print("Enemy detected: ", body.name)
 		current_target = body
 
-func _on_detection_area_body_exited(body: Node):
+func _on_detection_area_body_exited(body: Node3D):
+	print("Enemy detected: ", body.name)
 	if body == current_target:
 		print("Enemy lost: ", body.name)
 		current_target = null

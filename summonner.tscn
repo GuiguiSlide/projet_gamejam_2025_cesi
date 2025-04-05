@@ -11,7 +11,7 @@
 [node name="summonner" type="Node3D"]
 script = ExtResource("1_3hhbi")
 
-[node name="clown" parent="." instance=ExtResource("1_0mjir")]
+[node name="clownfish" parent="." instance=ExtResource("1_0mjir")]
 unique_name_in_owner = true
 visible = false
 
