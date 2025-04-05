@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://yfb3x5scxiq2"]
+[gd_scene load_steps=6 format=3 uid="uid://yfb3x5scxiq2"]
 
 [ext_resource type="PackedScene" uid="uid://b65070k2us0br" path="res://PLAYERGAMEJAM.gltf" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://cg57kvgqlkpkc" path="res://player.gd" id="1_67vjv"]
+[ext_resource type="PackedScene" uid="uid://cof24dj07dtko" path="res://playergamewrench.gltf" id="3_hqtel"]
+[ext_resource type="PackedScene" uid="uid://kjkyyc5stse3" path="res://projectile.tscn" id="3_i3pqv"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ym83u"]
 
@@ -18,5 +20,20 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.30201, -0.328401, 0.0665103)
 
+[node name="wrench" parent="arm" instance=ExtResource("3_hqtel")]
+unique_name_in_owner = true
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.384353, -0.205622, 0)
+
 [node name="Camera3D" type="Camera3D" parent="arm"]
+unique_name_in_owner = true
+
+[node name="ColorRect" type="ColorRect" parent="arm/Camera3D"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 1, 1, 0.203922)
+
+[node name="projectile" parent="." instance=ExtResource("3_i3pqv")]
 unique_name_in_owner = true

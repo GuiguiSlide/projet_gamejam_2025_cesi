@@ -16,6 +16,7 @@ var current_weapon = "pistol"
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	blue_filter.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	update_weapon()
 
 func _input(event):
@@ -33,6 +34,7 @@ func _unhandled_input(event):
 		cam.rotation.x = clamp(cam.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 		rotate_y(deg_to_rad(-delta.x))
 
+
 	# Weapon switching
 	if event.is_action_pressed("weapon1"):
 		switch_weapon("pistol")
@@ -40,6 +42,10 @@ func _unhandled_input(event):
 		switch_weapon("wrench")
 
 func _physics_process(delta):
+	# Check si le joueur est tombé trop bas et le remonter
+	if position.y <= -100:
+		position.y = 100
+
 	# Gravity
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -68,6 +74,7 @@ func _physics_process(delta):
 		elif current_weapon == "wrench":
 			place_tower()
 
+
 func switch_weapon(new_weapon: String):
 	current_weapon = new_weapon
 	update_weapon()
@@ -81,26 +88,47 @@ func update_weapon():
 		blue_filter.visible = (current_weapon == "wrench")
 
 func shoot_projectile():
-	if pistol:
-		var projectile = PROJECTILE_SCENE.instantiate() as RigidBody3D
-		if projectile:
-			var spawn_pos = pistol.global_position + (-pistol.global_transform.basis.z * 0.5)
-			var cam_forward = -cam.global_transform.basis.z.normalized()
-
-			projectile.global_transform.origin = spawn_pos
-			get_tree().current_scene.add_child(projectile)
-
-			# Apply an initial forward impulse
-			var initial_impulse = cam_forward * 50
-			projectile.apply_impulse(Vector3.ZERO, initial_impulse)
-		else:
-			print("Failed to instantiate projectile.")
-	else:
+	if not pistol:
 		print("Pistol node is missing!")
+		return
+
+	var projectile = PROJECTILE_SCENE.instantiate() as RigidBody3D
+	if not projectile:
+		print("Failed to instantiate projectile.")
+		return
+
+	# Ajoute le projectile à la scène d'abord
+	get_tree().current_scene.add_child(projectile)
+
+	# Vérifie qu'il est bien dans l'arbre avant d'accéder à global_transform
+	if not projectile.is_inside_tree():
+		print("Projectile is not inside the tree after adding it!")
+		return
+
+	# Positionnement du projectile légèrement devant le pistolet
+	var spawn_pos = pistol.global_position + (-pistol.global_transform.basis.z * 0.5)
+	var cam_forward = -cam.global_transform.basis.z.normalized()
+
+	projectile.global_transform.origin = spawn_pos
+
+	# Appliquer l'impulsion vers l'avant
+	# À la place de apply_impulse
+
+
+	var initial_impulse = cam_forward * 50
+	projectile.linear_velocity = cam_forward * 50
 
 func place_tower():
 	if wrench:
 		var tower = TOWER_SCENE.instantiate()
+
+		# Ajoute d'abord la tour à la scène
+		get_tree().current_scene.add_child(tower)
+
+		# Vérifie qu'elle est bien dans l'arbre
+		if not tower.is_inside_tree():
+			print("Tower is not inside the tree after adding it!")
+			return
 
 		# Raycast to find valid placement location
 		var ray_origin = cam.global_position
@@ -114,7 +142,6 @@ func place_tower():
 
 		if ray_result:
 			tower.global_transform.origin = ray_result.position
-			get_tree().current_scene.add_child(tower)
 		else:
 			print("Invalid tower placement!")
 	else:

@@ -16,11 +16,11 @@ script = ExtResource("1_16wf6")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="bottom" type="CollisionShape3D" parent="StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.226807, 0)
 shape = SubResource("BoxShape3D_o7or5")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="top" type="CollisionShape3D" parent="StaticBody3D"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.692917, 0)
 shape = SubResource("BoxShape3D_vgmt7")
 

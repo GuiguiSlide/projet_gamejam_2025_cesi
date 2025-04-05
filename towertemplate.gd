@@ -17,7 +17,7 @@ func _ready():
 	detection_area.body_exited.connect(_on_detection_area_body_exited)
 	detection_area.monitoring = true
 
-func _process(delta):
+func _process(_delta):
 	if current_target and is_instance_valid(current_target):
 		update_aim(current_target.global_position)
 
