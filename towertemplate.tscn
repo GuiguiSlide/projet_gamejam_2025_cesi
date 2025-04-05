@@ -1,18 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://bkdwop816hvcl"]
+[gd_scene load_steps=5 format=3 uid="uid://bkdwop816hvcl"]
 
 [ext_resource type="Script" uid="uid://wj4hgwr4olij" path="res://towertemplate.gd" id="1_16wf6"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h4e0o"]
-albedo_color = Color(1, 0, 1, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_16wf6"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a1rps"]
-albedo_color = Color(1, 0.0823529, 0, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_38fof"]
+[ext_resource type="PackedScene" uid="uid://bs3ewymg0qd7l" path="res://sharktower.gltf" id="2_a1rps"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_o7or5"]
+size = Vector3(1, 0.412598, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vgmt7"]
 
@@ -21,19 +13,14 @@ script = ExtResource("1_16wf6")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
-material_override = SubResource("StandardMaterial3D_h4e0o")
-mesh = SubResource("BoxMesh_16wf6")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="StaticBody3D"]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.692917, 0)
-material_override = SubResource("StandardMaterial3D_a1rps")
-mesh = SubResource("BoxMesh_38fof")
-skeleton = NodePath("../MeshInstance3D")
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.226807, 0)
 shape = SubResource("BoxShape3D_o7or5")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.692917, 0)
 shape = SubResource("BoxShape3D_vgmt7")
+
+[node name="blockbench_export" parent="StaticBody3D" instance=ExtResource("2_a1rps")]
+unique_name_in_owner = true
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
