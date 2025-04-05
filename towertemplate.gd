@@ -1,41 +1,42 @@
 extends Node3D
 
-@onready var upper_part = $StaticBody3D/blockbench_export/Node/all/gun
-var enemy: Node3D = null
+@onready var upper_part = $StaticBody3D/turretskin/Node/all/gun
+@onready var detection_area: Area3D = $DetectionArea
+
+var current_target: Node3D = null
 
 func _ready():
-	# Find the first enemy in the scene
-	var root = get_tree().get_current_scene()
-	enemy = find_enemy(root)
-
-	if enemy != null:
-		print("Enemy found:", enemy.name)
-	else:
-		print("No enemy found!")
+	# Verify nodes exist
+	if not detection_area:
+		push_error("DetectionArea node is missing!")
+		return
+	
+	# Configure collision
+	detection_area.collision_layer = 0  # Towers don't need to be detected
+	detection_area.collision_mask = 3   # Detect enemies (layer 3)
+	
+	# Connect signals to properly named functions
+	if not detection_area.body_entered.is_connected(_on_detection_area_body_entered):
+		detection_area.body_entered.connect(_on_detection_area_body_entered)
+	if not detection_area.body_exited.is_connected(_on_detection_area_body_exited):
+		detection_area.body_exited.connect(_on_detection_area_body_exited)
 
 func _process(delta):
-	if enemy == null:
-		return
+	if current_target and is_instance_valid(current_target):
+		update_aim(current_target.global_position)
 
-	var tower_pos = upper_part.global_transform.origin
-	var enemy_pos = enemy.global_transform.origin
+func update_aim(target_pos: Vector3):
+	var tower_pos = upper_part.global_position
+	target_pos.y = tower_pos.y  # Ignore vertical difference
+	upper_part.look_at(target_pos, Vector3.UP)
 
-	# Ignore vertical difference so it only rotates on Y axis
-	enemy_pos.y = tower_pos.y
+# Correct signal handler functions
+func _on_detection_area_body_entered(body: Node):
+	if body.is_in_group("enemies"):
+		print("Enemy detected: ", body.name)
+		current_target = body
 
-	var direction = (enemy_pos - tower_pos).normalized()
-	var target_yaw = atan2(direction.x, direction.z)
-
-	var rotation = upper_part.rotation
-	rotation.y = target_yaw
-	upper_part.rotation = rotation
-
-func find_enemy(node: Node) -> Node3D:
-	# This version finds the first Node3D whose name starts with "Enemy"
-	if node is Node3D and node.name.begins_with("Enemy"):
-		return node
-	for child in node.get_children():
-		var result = find_enemy(child)
-		if result != null:
-			return result
-	return null
+func _on_detection_area_body_exited(body: Node):
+	if body == current_target:
+		print("Enemy lost: ", body.name)
+		current_target = null

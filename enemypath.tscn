@@ -13,6 +13,7 @@ albedo_color = Color(0, 0, 1, 1)
 script = ExtResource("1_g6gke")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 4
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
 material_override = SubResource("StandardMaterial3D_wrq13")

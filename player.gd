@@ -3,54 +3,55 @@ extends CharacterBody3D
 const SPEED = 10.0
 const JUMP_VELOCITY = 4.5
 const MOUSE_SENS = 0.25
-const PROJECTILE_SCENE = preload("res://projectile.tscn") # Update with your actual projectile scene path
+const PROJECTILE_SCENE = preload("res://projectile.tscn")
+const TOWER_SCENE = preload("res://towertemplate.tscn")
 
-@onready var cam: Node3D = $arm  # Camera node
-@onready var gun_anim: AnimationPlayer = $arm/pistol/AnimationPlayer
-@onready var pistol: Node3D = $arm/pistol  # The pistol node (where the projectile will spawn)
+@onready var cam: Camera3D = $arm/Camera3D
+@onready var pistol: Node3D = $arm/pistol
+@onready var wrench: Node3D = $arm/wrench
+@onready var blue_filter = $arm/Camera3D/ColorRect
 
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+var current_weapon = "pistol"
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	if pistol:
-		print("Pistol node found:", pistol.name)
-	else:
-		print("Pistol node NOT found!")
+	update_weapon()
 
-func _input(event: InputEvent):
+func _input(event):
+	# Toggle mouse capture with left click and Escape
 	if event.is_action_pressed("leftclick"):
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	if event.is_action_pressed("ui_cancel"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
-func _unhandled_input(event: InputEvent):
+func _unhandled_input(event):
+	# Mouse look only when captured
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		cam.rotation.x -= deg_to_rad(event.relative.y * MOUSE_SENS)
 		cam.rotation.x = clamp(cam.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 		rotate_y(deg_to_rad(-event.relative.x * MOUSE_SENS))
+	
+	# Weapon switching
+	if event.is_action_pressed("weapon1"):
+		switch_weapon("pistol")
+	if event.is_action_pressed("weapon2"):
+		switch_weapon("wrench")
 
 func _physics_process(delta):
+	# Gravity
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 
+	# Jump
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
-	var input_dir = Input.get_vector("left", "right", "foward", "backward")
-	var cam_basis = cam.global_transform.basis
-	var forward = cam_basis.z
-	var right = cam_basis.x
-
-	# Keep movement on the ground (no vertical component)
-	forward.y = 0
-	right.y = 0
-	forward = forward.normalized()
-	right = right.normalized()
-
-	var direction = (right * input_dir.x + forward * input_dir.y).normalized()
-
-	if direction.length() > 0:
+	# Movement input
+	var input_dir = Input.get_vector("left", "right", "forward", "backward")
+	var direction = (cam.global_transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	
+	if direction:
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
 	else:
@@ -58,42 +59,33 @@ func _physics_process(delta):
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
 	move_and_slide()
+	
+	# Weapon actions
+	if Input.is_action_just_pressed("leftclick"):
+		if current_weapon == "pistol":
+			shoot_projectile()
+		elif current_weapon == "wrench":
+			place_tower()
 
-	# Shooting logic
-	if Input.is_action_just_pressed("leftclick") and gun_anim:
-		# Play shooting animation
-		gun_anim.play("shoot") 
+func switch_weapon(new_weapon: String):
+	current_weapon = new_weapon
+	update_weapon()
 
-		# Create and shoot the projectile
-		shoot_projectile()
+func update_weapon():
+	pistol.visible = (current_weapon == "pistol")
+	wrench.visible = (current_weapon == "wrench")
+	blue_filter.visible = (current_weapon == "wrench")
 
 func shoot_projectile():
-	if pistol and pistol.is_inside_tree():  # Ensure pistol is in the scene
-		# Create the projectile instance
-		var projectile = PROJECTILE_SCENE.instantiate()
+	var projectile = PROJECTILE_SCENE.instantiate()
+	var spawn_pos = pistol.global_position + (-pistol.global_transform.basis.z * 0.5)
+	var cam_forward = -cam.global_transform.basis.z.normalized()
+	
+	projectile.global_transform.origin = spawn_pos
+	get_tree().current_scene.add_child(projectile)
+	projectile.apply_central_impulse(cam_forward * 50)
 
-		# Position the projectile at the muzzle of the pistol
-		projectile.global_transform.origin = pistol.global_transform.origin
-
-		# Add the projectile to the scene
-		get_tree().current_scene.add_child(projectile)
-
-		# Apply the projectile movement (using the direction the camera is facing)
-		if projectile is MeshInstance3D:  # Ensure it's a MeshInstance3D
-			# Calculate the forward direction of the camera
-			var cam_basis = cam.global_transform.basis
-			var forward = cam_basis.z.normalized()  # Forward direction of the camera
-
-			# Set initial speed and direction of the projectile
-			var direction = forward
-			projectile.set_script(load("res://scripts/projectile_script.gd"))  # Assuming you add a script for projectile behavior
-
-			# Set rotation of the projectile to match camera orientation
-			projectile.rotation_degrees = Vector3(0, -cam.rotation.y, 0)  # Rotate the projectile along Y-axis to face the camera direction
-
-			# Apply movement manually in the next script (projectile_script.gd)
-			print("Projectile fired from", pistol.global_transform.origin)
-		else:
-			print("Projectile is not a MeshInstance3D!")
-	else:
-		print("Pistol node is missing or not inside the scene tree!")
+func place_tower():
+	var tower = TOWER_SCENE.instantiate()
+	tower.global_transform = wrench.global_transform
+	get_tree().current_scene.add_child(tower)
