@@ -19,3 +19,6 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8.080
 
 [node name="player" parent="." instance=ExtResource("4_1bvp3")]
 unique_name_in_owner = true
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.915958, 0.29524, 0.271763, -0.280842, -0.0120786, 0.959678, 0.286618, -0.955347, 0.0718521, 0, 30.2936, 0)
