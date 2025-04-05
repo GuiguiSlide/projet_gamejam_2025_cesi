@@ -1,35 +1,41 @@
 extends Node3D
 
 @onready var upper_part = $StaticBody3D/MeshInstance3D2
-var player: CharacterBody3D = null
+var enemy: Node3D = null
 
 func _ready():
-	# Look for the first CharacterBody3D node in the current scene
+	# Find the first enemy in the scene
 	var root = get_tree().get_current_scene()
-	player = find_player(root)
+	enemy = find_enemy(root)
+
+	if enemy != null:
+		print("Enemy found:", enemy.name)
+	else:
+		print("No enemy found!")
 
 func _process(delta):
-	if player == null:
+	if enemy == null:
 		return
 
-	var tower_position = upper_part.global_transform.origin
-	var player_position = player.global_transform.origin
+	var tower_pos = upper_part.global_transform.origin
+	var enemy_pos = enemy.global_transform.origin
 
-	# Flatten Y to only rotate horizontally
-	player_position.y = tower_position.y
+	# Ignore vertical difference so it only rotates on Y axis
+	enemy_pos.y = tower_pos.y
 
-	var direction = (player_position - tower_position).normalized()
-	var target_rotation = atan2(direction.x, direction.z)
+	var direction = (enemy_pos - tower_pos).normalized()
+	var target_yaw = atan2(direction.x, direction.z)
 
-	var current_rotation = upper_part.rotation
-	current_rotation.y = target_rotation
-	upper_part.rotation = current_rotation
+	var rotation = upper_part.rotation
+	rotation.y = target_yaw
+	upper_part.rotation = rotation
 
-func find_player(node: Node) -> CharacterBody3D:
-	if node is CharacterBody3D:
+func find_enemy(node: Node) -> Node3D:
+	# This version finds the first Node3D whose name starts with "Enemy"
+	if node is Node3D and node.name.begins_with("Enemy"):
 		return node
 	for child in node.get_children():
-		var result = find_player(child)
+		var result = find_enemy(child)
 		if result != null:
 			return result
 	return null
