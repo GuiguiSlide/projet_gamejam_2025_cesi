@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bf00jdwea0p30" path="res://player.tscn" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://bkdwop816hvcl" path="res://towertemplate.tscn" id="2_0xm2m"]
-[ext_resource type="PackedScene" path="res://enemypath.tscn" id="3_h2yge"]
+[ext_resource type="PackedScene" uid="uid://2ahhbnmdpfj4" path="res://enemypath.tscn" id="3_h2yge"]
 [ext_resource type="PackedScene" uid="uid://deqnj36q3k7p0" path="res://world.tscn" id="4_1bvp3"]
 
 [sub_resource type="Environment" id="Environment_7dm0k"]
