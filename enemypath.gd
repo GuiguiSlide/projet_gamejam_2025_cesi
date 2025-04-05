@@ -1,6 +1,7 @@
 extends Node3D
 
 @onready var body = $StaticBody3D
+@onready var anim = $StaticBody3D/blockbench_export/AnimationPlayer
 var speed = 2.0
 var health = 100.0
 var instructions = [
@@ -47,6 +48,9 @@ func die():
 	queue_free()
 
 func _physics_process(delta):
+	
+	anim.play("walk")
+	
 	if current_instruction >= instructions.size():
 		return
 
