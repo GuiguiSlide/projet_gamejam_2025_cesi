@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bi738m1l5be82"
-path="res://.godot/imported/fishlv3.gltf-f00fd9c562ba4eb68bc4b805310ec4da.scn"
+uid="uid://c4tdw56473uoc"
+path="res://.godot/imported/fishlv6.gltf-fea3d92d7587c0ed3c5b777d016da31f.scn"
 
 [deps]
 
-source_file="res://fishlv3.gltf"
-dest_files=["res://.godot/imported/fishlv3.gltf-f00fd9c562ba4eb68bc4b805310ec4da.scn"]
+source_file="res://modele/fishlv6.gltf"
+dest_files=["res://.godot/imported/fishlv6.gltf-fea3d92d7587c0ed3c5b777d016da31f.scn"]
 
 [params]
 

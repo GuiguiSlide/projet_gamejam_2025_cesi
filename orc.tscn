@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://bkn3jr3rlnuwn"]
+
+[ext_resource type="Script" uid="uid://dkoc1p3bdeab8" path="res://enemypath.gd" id="1_3xw0u"]
+[ext_resource type="PackedScene" uid="uid://clmklbpitomer" path="res://fishlv5.gltf" id="2_kapy6"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_8xmgw"]
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_3xw0u")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 4
+
+[node name="blockbench_export" parent="StaticBody3D" instance=ExtResource("2_kapy6")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("SphereShape3D_8xmgw")

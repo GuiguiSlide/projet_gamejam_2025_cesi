@@ -1,21 +1,20 @@
 [gd_scene load_steps=5 format=3 uid="uid://bpcr4ilibfy1d"]
 
+[ext_resource type="PackedScene" uid="uid://c3c5bjfrguo6l" path="res://summonner.tscn" id="1_7mycd"]
 [ext_resource type="PackedScene" uid="uid://deqnj36q3k7p0" path="res://world.tscn" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://bkdwop816hvcl" path="res://towertemplate.tscn" id="2_h2yge"]
-[ext_resource type="PackedScene" uid="uid://2ahhbnmdpfj4" path="res://enemypath.tscn" id="3_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://yfb3x5scxiq2" path="res://player.tscn" id="4_1bvp3"]
 
 [node name="main" type="Node3D"]
+
+[node name="summonner" parent="." instance=ExtResource("1_7mycd")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8.076, 1, -4.904)
 
 [node name="world" parent="." instance=ExtResource("1_ig7tw")]
 
 [node name="Tower" parent="." instance=ExtResource("2_h2yge")]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.38058, 0, 0.591472)
-
-[node name="Node3D" parent="." instance=ExtResource("3_1bvp3")]
-unique_name_in_owner = true
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8.08077, 0.625964, -4.90352)
 
 [node name="player" parent="." instance=ExtResource("4_1bvp3")]
 unique_name_in_owner = true

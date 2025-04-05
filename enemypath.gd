@@ -2,6 +2,7 @@ extends Node3D
 
 @onready var body = $StaticBody3D
 @onready var anim = $StaticBody3D/blockbench_export/AnimationPlayer
+
 var speed = 2.0
 var health = 100.0
 var instructions = [
@@ -39,6 +40,7 @@ func _ready():
 	body.collision_layer = 3  # Enemies' layer
 	body.collision_mask = 1   # Set to detect tower's detection area
 
+	# Ensure the AnimationPlayer node is valid before attempting to play animations
 func take_damage(amount):
 	health -= amount
 	if health <= 0:
@@ -48,11 +50,9 @@ func die():
 	queue_free()
 
 func _physics_process(delta):
-	
-	anim.play("walk")
-	
 	if current_instruction >= instructions.size():
 		return
+	anim.play("walk")
 
 	var instr = instructions[current_instruction]
 	

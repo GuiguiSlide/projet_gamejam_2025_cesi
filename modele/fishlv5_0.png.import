@@ -2,23 +2,21 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://beckpry4j5i7q"
-path="res://.godot/imported/fishlv1_0.png-c5e2b2a7048a4b4e326bdf554adeb5b2.ctex"
+uid="uid://degu37vci2t70"
+path.s3tc="res://.godot/imported/fishlv5_0.png-4276f64562dc5515f7192cc87f556898.s3tc.ctex"
 metadata={
-"vram_texture": false
-}
-generator_parameters={
-"md5": "158049c679ad69da70bb614dace83236"
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
-source_file="res://fishlv1_0.png"
-dest_files=["res://.godot/imported/fishlv1_0.png-c5e2b2a7048a4b4e326bdf554adeb5b2.ctex"]
+source_file="res://modele/fishlv5_0.png"
+dest_files=["res://.godot/imported/fishlv5_0.png-4276f64562dc5515f7192cc87f556898.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

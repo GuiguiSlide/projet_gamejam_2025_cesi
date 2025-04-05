@@ -2,19 +2,19 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bxm0dfwr0ewex"
-path="res://.godot/imported/fishlv4_0.png-028eddb1a8073fb6c767a55a8139ef96.ctex"
+uid="uid://bv2l1fei303a5"
+path="res://.godot/imported/fishlv6_0.png-bfaf5ba345be049f06a088e92a67fb48.ctex"
 metadata={
 "vram_texture": false
 }
 generator_parameters={
-"md5": "ae40f5519dd76d195a5fa2064043e230"
+"md5": "7f048132bb6e130f431b62be5a380fb7"
 }
 
 [deps]
 
-source_file="res://fishlv4_0.png"
-dest_files=["res://.godot/imported/fishlv4_0.png-028eddb1a8073fb6c767a55a8139ef96.ctex"]
+source_file="res://modele/fishlv6_0.png"
+dest_files=["res://.godot/imported/fishlv6_0.png-bfaf5ba345be049f06a088e92a67fb48.ctex"]
 
 [params]
 
