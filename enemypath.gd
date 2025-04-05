@@ -4,20 +4,39 @@ extends Node3D
 var speed = 2.0
 var health = 100.0
 var instructions = [
+	{"type": "move", "distance": 12},
+	{"type": "turn", "angle": 90},
+	{"type": "move", "distance": 5},
+	{"type": "turn", "angle": 90},
+	{"type": "move", "distance": 4},
+	{"type": "turn", "angle": 90},
+	{"type": "move", "distance": 13},
+	{"type": "turn", "angle": -90},
+	{"type": "move", "distance": 6},
+	{"type": "turn", "angle": -90},
+	{"type": "move", "distance": 4},
+	{"type": "turn", "angle": -90},
+	{"type": "move", "distance": 12},
+	{"type": "turn", "angle": 90},
+	{"type": "move", "distance": 4},
+	{"type": "turn", "angle": -90},
 	{"type": "move", "distance": 4},
 	{"type": "turn", "angle": -90},
 	{"type": "move", "distance": 10},
+	{"type": "turn", "angle": -90},
+	{"type": "move", "distance": 7},
 	{"type": "turn", "angle": 90},
-	{"type": "move", "distance": 6}
+	{"type": "move", "distance": 4},
 ]
+
 var current_instruction = 0
 var distance_moved = 0.0
 
 func _ready():
 	add_to_group("enemies")
-	# Ensure collision setup
-	body.collision_layer = 3  # Enemies layer
-	body.collision_mask = 1   # Collide with player
+	# Set collision layers/masks (layer numbers depend on your project settings)
+	body.collision_layer = 3  # Enemies' layer
+	body.collision_mask = 1   # Set to detect tower's detection area
 
 func take_damage(amount):
 	health -= amount
@@ -38,6 +57,7 @@ func _physics_process(delta):
 			var move_dist = speed * delta
 			var remaining = instr.distance - distance_moved
 			var actual_move = min(move_dist, remaining)
+			# Move along the node's local forward axis
 			translate(Vector3.FORWARD * actual_move)
 			distance_moved += actual_move
 			if distance_moved >= instr.distance:
@@ -46,8 +66,3 @@ func _physics_process(delta):
 		"turn":
 			rotate_y(deg_to_rad(instr.angle))
 			current_instruction += 1
-
-func _on_body_entered(body):
-	if body.is_in_group("projectile"):
-		take_damage(20)
-		body.queue_free()

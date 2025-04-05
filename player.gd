@@ -9,7 +9,7 @@ const TOWER_SCENE = preload("res://towertemplate.tscn")
 @onready var cam: Camera3D = $arm/Camera3D
 @onready var pistol: Node3D = $arm/pistol
 @onready var wrench: Node3D = $arm/wrench
-@onready var blue_filter = $arm/Camera3D/ColorRect
+@onready var blue_filter: ColorRect = $arm/Camera3D/ColorRect
 
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var current_weapon = "pistol"
@@ -28,10 +28,11 @@ func _input(event):
 func _unhandled_input(event):
 	# Mouse look only when captured
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-		cam.rotation.x -= deg_to_rad(event.relative.y * MOUSE_SENS)
+		var delta = event.relative * MOUSE_SENS
+		cam.rotation.x -= deg_to_rad(delta.y)
 		cam.rotation.x = clamp(cam.rotation.x, deg_to_rad(-90), deg_to_rad(90))
-		rotate_y(deg_to_rad(-event.relative.x * MOUSE_SENS))
-	
+		rotate_y(deg_to_rad(-delta.x))
+
 	# Weapon switching
 	if event.is_action_pressed("weapon1"):
 		switch_weapon("pistol")
@@ -72,20 +73,49 @@ func switch_weapon(new_weapon: String):
 	update_weapon()
 
 func update_weapon():
-	pistol.visible = (current_weapon == "pistol")
-	wrench.visible = (current_weapon == "wrench")
-	blue_filter.visible = (current_weapon == "wrench")
+	if pistol:
+		pistol.visible = (current_weapon == "pistol")
+	if wrench:
+		wrench.visible = (current_weapon == "wrench")
+	if blue_filter:
+		blue_filter.visible = (current_weapon == "wrench")
 
 func shoot_projectile():
-	var projectile = PROJECTILE_SCENE.instantiate()
-	var spawn_pos = pistol.global_position + (-pistol.global_transform.basis.z * 0.5)
-	var cam_forward = -cam.global_transform.basis.z.normalized()
-	
-	projectile.global_transform.origin = spawn_pos
-	get_tree().current_scene.add_child(projectile)
-	projectile.apply_central_impulse(cam_forward * 50)
+	if pistol:
+		var projectile = PROJECTILE_SCENE.instantiate() as RigidBody3D
+		if projectile:
+			var spawn_pos = pistol.global_position + (-pistol.global_transform.basis.z * 0.5)
+			var cam_forward = -cam.global_transform.basis.z.normalized()
+
+			projectile.global_transform.origin = spawn_pos
+			get_tree().current_scene.add_child(projectile)
+
+			# Apply an initial forward impulse
+			var initial_impulse = cam_forward * 50
+			projectile.apply_impulse(Vector3.ZERO, initial_impulse)
+		else:
+			print("Failed to instantiate projectile.")
+	else:
+		print("Pistol node is missing!")
 
 func place_tower():
-	var tower = TOWER_SCENE.instantiate()
-	tower.global_transform = wrench.global_transform
-	get_tree().current_scene.add_child(tower)
+	if wrench:
+		var tower = TOWER_SCENE.instantiate()
+
+		# Raycast to find valid placement location
+		var ray_origin = cam.global_position
+		var ray_direction = -cam.global_transform.basis.z.normalized()
+
+		var space_state = get_world_3d().direct_space_state
+		var query = PhysicsRayQueryParameters3D.create(ray_origin, ray_origin + ray_direction * 10)
+		query.exclude = [self]  # Exclude the current object from the raycast
+
+		var ray_result = space_state.intersect_ray(query)
+
+		if ray_result:
+			tower.global_transform.origin = ray_result.position
+			get_tree().current_scene.add_child(tower)
+		else:
+			print("Invalid tower placement!")
+	else:
+		print("Wrench node is missing!")
