@@ -17,7 +17,7 @@ func _ready():
 		]
 	# Start the timer
 	var timer = Timer.new()
-	timer.wait_time = 10  # Set the timer to 10 seconds
+	timer.wait_time = 0.1  # Set the timer to 10 seconds
 	timer.one_shot = false  # Make the timer repeat
 	add_child(timer)  # Add the timer to the scene tree
 	timer.start()  # Start the timer
@@ -33,13 +33,11 @@ func duplicate_child():
 		var mob_scene = mob_scenes[random_index]
 		# Instance the mob scene
 		var new_child = mob_scene.instantiate()
-		# Set the owner of the new child to ensure it is added to the scene tree
-		new_child.owner = get_tree().current_scene
-		# Add the new child to the scene tree
+		# Add the new child to the scene tree (this will automatically assign an owner)
 		add_child(new_child)
 		# Set the position of the new child
 		new_child.global_transform.origin = spawn_position
-		# Set the rotation of the new child to -90 degrees around the Y-axis
+		# Set the rotation of the new child to the specified spawn rotation
 		new_child.rotation_degrees = spawn_rotation
 	else:
 		push_error("No mob scenes assigned.")
