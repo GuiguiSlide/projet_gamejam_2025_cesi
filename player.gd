@@ -7,8 +7,8 @@ const PROJECTILE_SCENE = preload("res://projectile.tscn")
 const TOWER_SCENE = preload("res://towertemplate.tscn")
 
 @onready var cam: Camera3D = $arm/Camera3D
-@onready var pistol: Node3D = $arm/pistol
-@onready var wrench: Node3D = $arm/wrench
+@onready var pistol: Node3D = $arm/Camera3D/pistol
+@onready var wrench: Node3D = $arm/Camera3D/wrench
 @onready var blue_filter: ColorRect = $arm/Camera3D/ColorRect
 
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
