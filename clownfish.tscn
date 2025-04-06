@@ -9,7 +9,7 @@ radius = 1.58386
 [sub_resource type="SphereShape3D" id="SphereShape3D_6thd1"]
 radius = 1.58808
 
-[node name="clownfish" type="Node3D"]
+[node name="Node3D" type="Node3D"]
 script = ExtResource("1_6thd1")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." groups=["enemies", "enemy"]]

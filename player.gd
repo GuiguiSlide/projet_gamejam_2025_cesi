@@ -9,6 +9,12 @@ const PROJECTILE_SCENE = preload("res://projectile.tscn")
 @export var towerplace : AudioStream = preload("res://sons/tour_placement.mp3")
 @export var tower_scenes : Array = []  # Array for tower scenes
 const SHOOT_COOLDOWN = 0.3  # seconds between shots
+var can_scroll: bool = true
+var scroll_cooldown_timer: Timer
+const SCROLL_COOLDOWN = 1.0
+# Create scroll cooldown timer
+
+
 
 @onready var animpistol = $arm/Camera3D/pistol/AnimationPlayer
 @onready var cam: Camera3D = $arm/Camera3D

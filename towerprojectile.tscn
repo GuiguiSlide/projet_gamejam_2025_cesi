@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://ck4xbmo2o054a"]
+
+[ext_resource type="Script" uid="uid://256m26kthnc8" path="res://towerprojectile.gd" id="1_g6t3t"]
+
+[node name="Node3D" type="Area3D"]
+script = ExtResource("1_g6t3t")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
