@@ -19,6 +19,7 @@ unique_name_in_owner = true
 
 [node name="Camera3D" type="Camera3D" parent="arm"]
 unique_name_in_owner = true
+fov = 103.048
 
 [node name="ColorRect" type="ColorRect" parent="arm/Camera3D"]
 anchors_preset = 15
