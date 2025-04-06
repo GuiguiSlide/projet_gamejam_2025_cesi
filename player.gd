@@ -132,6 +132,11 @@ func shoot_projectile():
 	var spawn_pos = pistol.global_position + (-pistol.global_transform.basis.z * 0.5)
 	var cam_forward = -cam.global_transform.basis.z.normalized()
 	projectile.global_transform.origin = spawn_pos
+	
+	# Align the projectile's rotation to the camera's rotation
+	projectile.look_at(projectile.global_transform.origin + cam_forward, Vector3.UP)
+
+	# Apply the velocity along the camera's forward vector
 	projectile.linear_velocity = cam_forward * 50
 
 func place_tower():
