@@ -1,13 +1,13 @@
 [gd_scene load_steps=5 format=3 uid="uid://dh7p1bd6otg4c"]
 
-[ext_resource type="Script" uid="uid://dkoc1p3bdeab8" path="res://enemypath.gd" id="1_u0utl"]
+[ext_resource type="Script" uid="uid://criaxeysvuh02" path="res://salmon.gd" id="1_u0utl"]
 [ext_resource type="PackedScene" uid="uid://qdjhx5rvi28x" path="res://modele/fishlv2.gltf" id="2_1vhn8"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_8xmgw"]
-radius = 3.0
+radius = 1.90405
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_u0utl"]
-radius = 3.0
+radius = 1.88415
 
 [node name="salmon" type="Node3D" groups=["enemy"]]
 script = ExtResource("1_u0utl")

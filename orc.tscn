@@ -1,13 +1,13 @@
 [gd_scene load_steps=5 format=3 uid="uid://bkn3jr3rlnuwn"]
 
-[ext_resource type="Script" uid="uid://dkoc1p3bdeab8" path="res://enemypath.gd" id="1_3xw0u"]
+[ext_resource type="Script" uid="uid://b6dynle0xhes8" path="res://orc.gd" id="1_3xw0u"]
 [ext_resource type="PackedScene" uid="uid://clmklbpitomer" path="res://modele/fishlv5.gltf" id="2_kapy6"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_8xmgw"]
-radius = 5.0
+radius = 1.69997
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_3xw0u"]
-radius = 3.0
+radius = 1.7167
 
 [node name="orc" type="Node3D" groups=["enemies", "enemy"]]
 script = ExtResource("1_3xw0u")
