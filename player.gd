@@ -139,6 +139,10 @@ func take_damage(amount: int):
 func die():
 	get_tree().reload_current_scene()
 
+func add_money(amount: int):
+	player_money += amount
+	money_label.text = "Coins: " + str(player_money)
+
 func shoot_projectile():
 	if not pistol:
 		print("Pistol node is missing!")
@@ -163,8 +167,8 @@ func shoot_projectile():
 
 func place_tower():
 	if wrench:
-		if player_money >= 10:
-			player_money -= 10
+		if player_money >= 25:
+			player_money -= 25
 			money_label.text = "Coins: " + str(player_money)
 
 			var tower = tower_scenes[current_tower_index].instantiate()

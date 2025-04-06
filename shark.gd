@@ -42,7 +42,11 @@ func _ready():
 	body.collision_mask = 1
 
 func die():
+	var player = get_tree().get_first_node_in_group("player")
+	if player and player.has_method("add_money"):
+		player.add_money(10)  # Give the player 10 money upon monster death
 	queue_free()
+
 
 func take_damage(amount: int):
 	health -= amount
