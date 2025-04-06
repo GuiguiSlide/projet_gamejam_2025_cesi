@@ -59,6 +59,7 @@ func _ready():
 	add_child(main_music_player)
 	main_music_player.stream = main_menu
 	main_music_player.play()
+	main_music_player.volume_db = -30.0 # Ajustez cette valeur pour contrôler le 
 
 
 func _input(event):

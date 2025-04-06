@@ -24,13 +24,17 @@ shape = SubResource("BoxShape3D_o7or5")
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.692917, 0)
 shape = SubResource("BoxShape3D_vgmt7")
 
-[node name="turretskin" parent="StaticBody3D" instance=ExtResource("2_cmsfj")]
+[node name="blockbench_export" parent="StaticBody3D" instance=ExtResource("2_cmsfj")]
 unique_name_in_owner = true
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
-[node name="DetectionArea" type="Area3D" parent="." groups=["enemy"]]
+[node name="DetectionArea" type="Area3D" parent="."]
 unique_name_in_owner = true
 collision_mask = 4
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DetectionArea"]
 shape = SubResource("SphereShape3D_a1rps")
+
+[connection signal="area_entered" from="DetectionArea" to="." method="_on_detection_area_area_entered"]
+[connection signal="area_exited" from="DetectionArea" to="." method="_on_detection_area_area_exited"]
+[connection signal="area_shape_entered" from="DetectionArea" to="." method="_on_detection_area_area_shape_entered"]

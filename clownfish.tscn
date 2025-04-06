@@ -12,7 +12,7 @@ radius = 1.58808
 [node name="clownfish" type="Node3D"]
 script = ExtResource("1_6thd1")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="." groups=["enemies"]]
+[node name="StaticBody3D" type="StaticBody3D" parent="." groups=["enemies", "enemy"]]
 collision_layer = 4
 collision_mask = 3
 

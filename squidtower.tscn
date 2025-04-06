@@ -26,9 +26,12 @@ shape = SubResource("BoxShape3D_vgmt7")
 
 [node name="blockbench_export" parent="StaticBody3D" instance=ExtResource("2_cc2iw")]
 
-[node name="DetectionArea" type="Area3D" parent="." groups=["enemy"]]
+[node name="DetectionArea" type="Area3D" parent="."]
 unique_name_in_owner = true
 collision_mask = 4
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DetectionArea"]
 shape = SubResource("SphereShape3D_a1rps")
+
+[connection signal="area_shape_entered" from="DetectionArea" to="." method="_on_detection_area_area_shape_entered"]
+[connection signal="area_shape_exited" from="DetectionArea" to="." method="_on_detection_area_area_shape_exited"]

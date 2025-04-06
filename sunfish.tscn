@@ -3,27 +3,27 @@
 [ext_resource type="Script" uid="uid://dm3tjkah5tnyk" path="res://sunfish.gd" id="1_u5kul"]
 [ext_resource type="PackedScene" uid="uid://bi738m1l5be82" path="res://modele/fishlv3.gltf" id="2_aecs1"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_8xmgw"]
-radius = 2.97746
-
 [sub_resource type="SphereShape3D" id="SphereShape3D_u5kul"]
 radius = 3.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_8xmgw"]
+radius = 2.97746
 
 [node name="sunfish" type="Node3D"]
 script = ExtResource("1_u5kul")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="." groups=["enemies"]]
+[node name="StaticBody3D" type="StaticBody3D" parent="." groups=["enemy"]]
 collision_layer = 4
 collision_mask = 3
+
+[node name="Area3D" type="Area3D" parent="StaticBody3D"]
+collision_layer = 255
+collision_mask = 255
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D/Area3D"]
+shape = SubResource("SphereShape3D_u5kul")
 
 [node name="blockbench_export" parent="StaticBody3D" instance=ExtResource("2_aecs1")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 shape = SubResource("SphereShape3D_8xmgw")
-
-[node name="Area3D" type="Area3D" parent="."]
-collision_layer = 255
-collision_mask = 255
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-shape = SubResource("SphereShape3D_u5kul")

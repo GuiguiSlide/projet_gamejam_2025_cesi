@@ -1,34 +1,44 @@
 extends Node3D
 
-@onready var upper_part = $StaticBody3D/turretskin/Node/all/gun
+@onready var upper_part = $StaticBody3D/blockbench_export/Node/all/gun
 @onready var detection_area: Area3D = $DetectionArea
 
-var target: Array =[]
+var targets: Array = []
 var current_target: Node3D = null
-var body 
 
 func _ready():
 	if not detection_area:
 		push_error("DetectionArea node is missing!")
 		return
 
-	# Configure the detection area for the tower
-	detection_area.collision_layer = 3  # Set to the same layer as enemies
-	detection_area.collision_mask = 1   # Set to detect enemies' layer
-	#detection_area.body_entered.connect(_on_detection_area_body_entered)
-	#detection_area.body_exited.connect(_on_detection_area_body_exited)
-	detection_area.monitoring = true
+	# Set up collision layers/masks according to your project settings
+	detection_area.body_entered.connect(_on_detection_area_body_entered)
+	detection_area.body_exited.connect(_on_detection_area_body_exited)
 
-
-
-func _process(_delta):
+func _process(delta):
+	# Clean up any invalid or destroyed targets
+	targets = targets.filter(func(t): return is_instance_valid(t))
 	
-	upper_part.rotation.y += 1
-
-func _on_detection_area_area_shape_entered(area_rid: RID, area: Area3D, area_shape_index: int, local_shape_index: int) -> void:
-	target.append(area)
-	body = area.get_parent()
+	# Update current target to first valid enemy
+	if not targets.is_empty():
+		current_target = targets[0]
+	else:
+		current_target = null
 	
-func _on_detection_area_area_shape_exited(area_rid: RID, area: Area3D, area_shape_index: int, local_shape_index: int) -> void:
-	target.erase(area)
-	print(target)
+	# Rotate towards target
+	if current_target:
+		var target_pos = current_target.global_transform.origin
+		target_pos.y = upper_part.global_transform.origin.y  # Keep rotation horizontal
+		upper_part.look_at(target_pos, Vector3.UP)
+	else:
+		# Optional: Add idle behavior here
+		pass
+
+func _on_detection_area_body_entered(body: Node3D):
+	if body.is_in_group("enemy"):  # Make sure enemies are in 'enemy' group
+		if not body in targets:
+			targets.append(body)
+
+func _on_detection_area_body_exited(body: Node3D):
+	if body in targets:
+		targets.erase(body)
