@@ -2,9 +2,11 @@ extends Node3D
 
 @onready var upper_part = $StaticBody3D/blockbench_export/Node/all/gun
 @onready var detection_area: Area3D = $DetectionArea
-var damage: int = 5
+var damage: int = 2.5
 var targets: Array = []
 var current_target: Node3D = null
+var damage_interval: float = 1.0  # Time interval for damage in seconds
+var last_damage_time: float = 0.0
 
 func _ready():
 	if not detection_area:
@@ -13,7 +15,7 @@ func _ready():
 
 	# Set up collision layers/masks according to your project settings
 
-func _process(delta):
+func _process(_delta):
 	# Clean up any invalid or destroyed targets
 	targets = targets.filter(func(t): return is_instance_valid(t))
 	
@@ -31,9 +33,16 @@ func _process(delta):
 	else:
 		# Optional: Add idle behavior here
 		pass
+	
+	# Apply damage every second
+	var current_time = Time.get_ticks_msec() / 1000.0  # Convert to seconds
+	if current_target and current_time - last_damage_time >= damage_interval:
+		last_damage_time = current_time
+		if current_target.has_method("take_damage"):
+			current_target.take_damage(damage)
 
-
-func _on_detection_area_area_shape_entered(area_rid: RID, area: Area3D, area_shape_index: int, local_shape_index: int) -> void:
+func _on_detection_area_area_shape_entered(_area_rid: RID, area: Area3D, _area_shape_index: int, _local_shape_index: int) -> void:
+	print('dmg')
 	var body = area.get_parent()
 	if body.has_method("take_damage"):
 		body.take_damage(damage)
