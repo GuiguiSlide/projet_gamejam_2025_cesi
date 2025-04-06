@@ -2,7 +2,7 @@ extends Node3D
 
 @onready var upper_part = $StaticBody3D/blockbench_export/Node/all/gun
 @onready var detection_area: Area3D = $DetectionArea
-
+var damage: int = 5
 var targets: Array = []
 var current_target: Node3D = null
 
@@ -12,8 +12,6 @@ func _ready():
 		return
 
 	# Set up collision layers/masks according to your project settings
-	detection_area.body_entered.connect(_on_detection_area_body_entered)
-	detection_area.body_exited.connect(_on_detection_area_body_exited)
 
 func _process(delta):
 	# Clean up any invalid or destroyed targets
@@ -34,11 +32,8 @@ func _process(delta):
 		# Optional: Add idle behavior here
 		pass
 
-func _on_detection_area_body_entered(body: Node3D):
-	if body.is_in_group("enemy"):  # Make sure enemies are in 'enemy' group
-		if not body in targets:
-			targets.append(body)
 
-func _on_detection_area_body_exited(body: Node3D):
-	if body in targets:
-		targets.erase(body)
+func _on_detection_area_area_shape_entered(area_rid: RID, area: Area3D, area_shape_index: int, local_shape_index: int) -> void:
+	var body = area.get_parent()
+	if body.has_method("take_damage"):
+		body.take_damage(damage)
