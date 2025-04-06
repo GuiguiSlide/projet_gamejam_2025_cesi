@@ -17,7 +17,7 @@ func _ready():
 		]
 	# Start the timer
 	var timer = Timer.new()
-	timer.wait_time = 5  # Set the timer to 10 seconds
+	timer.wait_time = 5 # Set the timer to 10 seconds
 	timer.one_shot = false  # Make the timer repeat
 	add_child(timer)  # Add the timer to the scene tree
 	timer.start()  # Start the timer

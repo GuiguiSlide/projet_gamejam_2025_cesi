@@ -28,13 +28,14 @@ func update_aim(target_pos: Vector3):
 
 
 func _on_detection_area_body_entered(body: Node3D):
-	print("Enemy detected: ", body.name)
+	var tar= body.get_parent()
 	if body.is_in_group("enemies"):
-		print("Enemy detected: ", body.name)
+		print("Enemy detected: ", tar.name)
 		current_target = body
 
 func _on_detection_area_body_exited(body: Node3D):
-	print("Enemy detected: ", body.name)
+	var tar= body.get_parent()
+	print("Enemy lost ", tar.name)
 	if body == current_target:
 		print("Enemy lost: ", body.name)
 		current_target = null
