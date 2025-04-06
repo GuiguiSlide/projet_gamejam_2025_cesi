@@ -1,4 +1,6 @@
-[gd_scene load_steps=13 format=3 uid="uid://deqnj36q3k7p0"]
+[gd_scene load_steps=14 format=3 uid="uid://deqnj36q3k7p0"]
+
+[ext_resource type="PackedScene" uid="uid://cddjtjam04o8" path="res://buble.tscn" id="1_f3sb7"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_gv5m4"]
 
@@ -781,3 +783,21 @@ surface_material_override/0 = SubResource("StandardMaterial3D_036b0")
 transform = Transform3D(0.502682, 0, 0, 0, 0.994109, -0.0489129, 0, 0.108381, 0.448646, 0, 2.21132, 0.128007)
 mesh = SubResource("BoxMesh_tlwt5")
 surface_material_override/0 = SubResource("StandardMaterial3D_036b0")
+
+[node name="buble" parent="." instance=ExtResource("1_f3sb7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.14849, 2.78694, -5.84667)
+
+[node name="buble2" parent="." instance=ExtResource("1_f3sb7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.16659, 1.49238, -5.84667)
+
+[node name="buble3" parent="." instance=ExtResource("1_f3sb7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.3491, 1.49238, 1.8056)
+
+[node name="buble4" parent="." instance=ExtResource("1_f3sb7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.13524, 1.49238, 1.8056)
+
+[node name="buble5" parent="." instance=ExtResource("1_f3sb7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.141863, 0.137669, 1.8056)
+
+[node name="buble6" parent="." instance=ExtResource("1_f3sb7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.141863, 0.137669, 1.8056)

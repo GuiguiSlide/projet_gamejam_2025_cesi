@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://cddjtjam04o8"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cxhaw"]
+gravity = Vector3(0, 2, 0)
+color = Color(0.254902, 1, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_5ux84"]
+radius = 0.1
+height = 0.2
+
+[node name="buble" type="Node3D"]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+amount_ratio = 0.0964
+process_material = SubResource("ParticleProcessMaterial_cxhaw")
+draw_pass_1 = SubResource("SphereMesh_5ux84")
