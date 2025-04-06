@@ -1,13 +1,13 @@
 [gd_scene load_steps=5 format=3 uid="uid://b5qf8p75pagbp"]
 
-[ext_resource type="Script" uid="uid://dkoc1p3bdeab8" path="res://enemypath.gd" id="1_6thd1"]
+[ext_resource type="Script" uid="uid://cx5jgqvgmgsey" path="res://clownfish.gd" id="1_6thd1"]
 [ext_resource type="PackedScene" uid="uid://bg6s1w5qsnhl4" path="res://modele/fishlv1.gltf" id="2_d4msy"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_8xmgw"]
-radius = 3.0
+radius = 1.58386
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_6thd1"]
-radius = 3.0
+radius = 1.58808
 
 [node name="clownfish" type="Node3D" groups=["enemy"]]
 script = ExtResource("1_6thd1")
@@ -19,6 +19,7 @@ collision_mask = 3
 [node name="blockbench_export" parent="StaticBody3D" instance=ExtResource("2_d4msy")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(0.999436, 0, 0.0335738, 0, 1, 0, -0.0335738, 0, 0.999436, 0, 0, 0)
 shape = SubResource("SphereShape3D_8xmgw")
 
 [node name="Area3D" type="Area3D" parent="."]

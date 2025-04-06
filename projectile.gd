@@ -1,6 +1,6 @@
 extends RigidBody3D
 
-@export var damage: int = 20
+@export var damage: int = 10
 @export var lifetime: float = 2.0
 @onready var hitbox: Area3D = $Hitbox
 

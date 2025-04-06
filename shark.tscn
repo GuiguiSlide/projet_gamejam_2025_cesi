@@ -1,13 +1,13 @@
 [gd_scene load_steps=5 format=3 uid="uid://dg7gisdh0g72g"]
 
-[ext_resource type="Script" uid="uid://dkoc1p3bdeab8" path="res://enemypath.gd" id="1_d5pdq"]
+[ext_resource type="Script" uid="uid://bog75bnxwahba" path="res://shark.gd" id="1_d5pdq"]
 [ext_resource type="PackedScene" uid="uid://byax2s52i6f10" path="res://modele/fishlv4.gltf" id="2_k17ol"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_8xmgw"]
-radius = 4.0
+radius = 1.67305
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_d5pdq"]
-radius = 3.0
+radius = 1.69054
 
 [node name="shark" type="Node3D" groups=["enemy"]]
 script = ExtResource("1_d5pdq")
