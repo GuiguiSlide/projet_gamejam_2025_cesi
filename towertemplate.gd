@@ -1,6 +1,6 @@
 extends Node3D
 
-@onready var upper_part = $StaticBody3D/turretskin/Node/all/gun
+@onready var upper_part = $StaticBody3D/blockbench_export/Node/all/gun
 @onready var detection_area: Area3D = $DetectionArea
 
 var current_target: Node3D = null

@@ -4,7 +4,7 @@ const SPEED = 10.0
 const JUMP_VELOCITY = 4.5
 const MOUSE_SENS = 0.25
 const PROJECTILE_SCENE = preload("res://projectile.tscn")
-const TOWER_SCENE = preload("res://towertemplate.tscn")
+@export var tower_scenes : Array = []  # Array for tower scenes
 const SHOOT_COOLDOWN = 0.3  # seconds between shots
 
 @onready var animpistol = $arm/Camera3D/pistol/AnimationPlayer
@@ -21,6 +21,7 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var current_weapon = "pistol"
 var can_shoot = true
 var shoot_timer: Timer
+var current_tower_index = 0  # Tracks the selected tower index
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -38,11 +39,32 @@ func _ready():
 	shoot_timer.connect("timeout", Callable(self, "_on_shoot_cooldown_timeout"))
 	add_child(shoot_timer)
 
+	# Ensure the tower_scenes array is populated in the editor
+	if tower_scenes.is_empty():
+		tower_scenes = [
+			preload("res://sharktower.tscn"),
+			preload("res://eeltower.tscn"),
+			preload("res://puffertower.tscn"),
+			preload("res://sharktower.tscn"),
+			preload("res://squidtower.tscn"),
+		]
+
 func _input(event):
 	if event.is_action_pressed("leftclick"):
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	if event.is_action_pressed("ui_cancel"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+	# Allow tower switching when the wrench is in hand
+	if current_weapon == "wrench":
+		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			# Cycle through towers on scroll up (go backwards)
+			current_tower_index = (current_tower_index - 1 + tower_scenes.size()) % tower_scenes.size()
+			print("Selected tower index: ", current_tower_index)
+		elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			# Cycle through towers on scroll down (go forwards)
+			current_tower_index = (current_tower_index + 1) % tower_scenes.size()
+			print("Selected tower index: ", current_tower_index)
 
 func _unhandled_input(event):
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
@@ -145,7 +167,7 @@ func place_tower():
 			player_money -= 10
 			money_label.text = "Coins: " + str(player_money)
 
-			var tower = TOWER_SCENE.instantiate()
+			var tower = tower_scenes[current_tower_index].instantiate()
 			get_tree().current_scene.add_child(tower)
 
 			if not tower.is_inside_tree():

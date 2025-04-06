@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://bt0enh6bcbt4"]
+
+[ext_resource type="Script" uid="uid://wj4hgwr4olij" path="res://towertemplate.gd" id="1_3r2pl"]
+[ext_resource type="PackedScene" uid="uid://bs3ewymg0qd7l" path="res://sharktower.gltf" id="2_cmsfj"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o7or5"]
+size = Vector3(1, 0.412598, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vgmt7"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_a1rps"]
+radius = 3.0
+
+[node name="Tower" type="Node3D"]
+script = ExtResource("1_3r2pl")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="bottom" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.226807, 0)
+shape = SubResource("BoxShape3D_o7or5")
+
+[node name="top" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.692917, 0)
+shape = SubResource("BoxShape3D_vgmt7")
+
+[node name="turretskin" parent="StaticBody3D" instance=ExtResource("2_cmsfj")]
+unique_name_in_owner = true
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="DetectionArea" type="Area3D" parent="." groups=["enemy"]]
+unique_name_in_owner = true
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DetectionArea"]
+shape = SubResource("SphereShape3D_a1rps")
