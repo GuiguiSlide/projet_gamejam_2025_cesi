@@ -2,7 +2,9 @@ extends Node3D
 
 @onready var upper_part = $StaticBody3D/blockbench_export/Node/all/gun
 @onready var detection_area: Area3D = $DetectionArea
-var damage: int = 2.5
+@onready var anime= $StaticBody3D/blockbench_export/AnimationPlayer
+
+var damage: int = 5
 var targets: Array = []
 var current_target: Node3D = null
 var damage_interval: float = 1.0  # Time interval for damage in seconds
@@ -19,6 +21,7 @@ func _process(_delta):
 	# Clean up any invalid or destroyed targets
 	targets = targets.filter(func(t): return is_instance_valid(t))
 	
+	position.y = 0
 	# Update current target to first valid enemy
 	if not targets.is_empty():
 		current_target = targets[0]
@@ -45,4 +48,5 @@ func _on_detection_area_area_shape_entered(_area_rid: RID, area: Area3D, _area_s
 	print('dmg')
 	var body = area.get_parent()
 	if body.has_method("take_damage"):
+		anime.play("shoot")
 		body.take_damage(damage)
