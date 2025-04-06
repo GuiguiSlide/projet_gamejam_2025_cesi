@@ -9,14 +9,15 @@ radius = 2.98133
 [sub_resource type="SphereShape3D" id="SphereShape3D_v43gg"]
 radius = 3.0
 
-[node name="whale" type="Node3D" groups=["enemy"]]
+[node name="whale" type="Node3D"]
 script = ExtResource("1_v43gg")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="StaticBody3D" type="StaticBody3D" parent="." groups=["enemies"]]
 collision_layer = 4
 collision_mask = 3
 
 [node name="blockbench_export" parent="StaticBody3D" instance=ExtResource("2_d3rs6")]
+unique_name_in_owner = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 transform = Transform3D(1.00869, 0, 0, 0, 1.00869, 0, 0, 0, 1.00869, 0, 0, 0)

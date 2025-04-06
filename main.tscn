@@ -14,7 +14,7 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8.076
 
 [node name="Tower" parent="." instance=ExtResource("2_h2yge")]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.38058, 0, 0.591472)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.38058, 0, -6.23818)
 
 [node name="player" parent="." instance=ExtResource("4_1bvp3")]
 unique_name_in_owner = true

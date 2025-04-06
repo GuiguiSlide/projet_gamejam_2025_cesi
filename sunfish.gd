@@ -6,7 +6,6 @@ extends Node3D
 var speed = 1.3
 var has_reached_end = false
 var health = 80  # Enemy health
-
 var instructions = [
 	{"type": "move", "distance": 12},
 	{"type": "turn", "angle": 90},

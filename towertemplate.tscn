@@ -34,3 +34,6 @@ collision_mask = 4
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DetectionArea"]
 shape = SubResource("SphereShape3D_a1rps")
+
+[connection signal="area_shape_entered" from="DetectionArea" to="." method="_on_detection_area_area_shape_entered"]
+[connection signal="area_shape_exited" from="DetectionArea" to="." method="_on_detection_area_area_shape_exited"]
