@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://bon5r8gpkp27b"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_l1sk6"]
+direction = Vector3(1, -2, 0)
+spread = 180.0
+initial_velocity_min = 1.0
+initial_velocity_max = 2.0
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_44s4y"]
+albedo_color = Color(0, 0.309804, 0.87451, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_6b75d"]
+material = SubResource("StandardMaterial3D_44s4y")
+radius = 0.1
+height = 0.2
+
+[node name="tracer" type="Node3D"]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+amount = 12
+lifetime = 0.53
+speed_scale = 6.23
+trail_enabled = true
+trail_lifetime = 5.58
+process_material = SubResource("ParticleProcessMaterial_l1sk6")
+draw_pass_1 = SubResource("SphereMesh_6b75d")

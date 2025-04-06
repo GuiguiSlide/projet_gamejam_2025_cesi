@@ -3,6 +3,7 @@ extends Node3D
 @onready var body = $StaticBody3D
 @onready var anim = $StaticBody3D/blockbench_export/AnimationPlayer
 
+
 var speed = 3
 var has_reached_end = false
 var health = 10  # Enemy health
@@ -45,11 +46,13 @@ func die():
 	var player = get_tree().get_first_node_in_group("player")
 	if player and player.has_method("add_money"):
 		player.add_money(10)  # Give the player 10 money upon monster death
+	
 	queue_free()
 
 
 func take_damage(amount: int):
 	health -= amount
+	
 	print("Enemy took", amount, "damage. Remaining:", health)
 	if health <= 0:
 		die()
