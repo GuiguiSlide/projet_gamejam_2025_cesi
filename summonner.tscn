@@ -2,5 +2,5 @@
 
 [ext_resource type="Script" uid="uid://cyjo7eqndso7f" path="res://summonner.gd" id="1_3hhbi"]
 
-[node name="summonner" type="Node3D"]
+[node name="summonner" type="Node3D" groups=["enemy"]]
 script = ExtResource("1_3hhbi")

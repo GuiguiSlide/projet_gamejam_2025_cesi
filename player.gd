@@ -5,26 +5,38 @@ const JUMP_VELOCITY = 4.5
 const MOUSE_SENS = 0.25
 const PROJECTILE_SCENE = preload("res://projectile.tscn")
 const TOWER_SCENE = preload("res://towertemplate.tscn")
+const SHOOT_COOLDOWN = 0.3  # seconds between shots
 
+@onready var animpistol = $arm/Camera3D/pistol/AnimationPlayer
 @onready var cam: Camera3D = $arm/Camera3D
 @onready var pistol: Node3D = $arm/Camera3D/pistol
 @onready var wrench: Node3D = $arm/Camera3D/wrench
 @onready var blue_filter: ColorRect = $arm/Camera3D/ColorRect
 @onready var health_label: Label = $arm/Camera3D/ui/health
 @onready var money_label: Label = $arm/Camera3D/ui/money
-var timer = Timer.new()
+
 var player_money: int = 100
 var player_health: int = 100
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var current_weapon = "pistol"
+var can_shoot = true
+var shoot_timer: Timer
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	blue_filter.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	update_weapon()
-	# Initialize UI labels
+
+	# Initialize UI
 	money_label.text = "Coins: " + str(player_money)
 	health_label.text = "Health: " + str(player_health)
+
+	# Create and configure shoot cooldown timer
+	shoot_timer = Timer.new()
+	shoot_timer.wait_time = SHOOT_COOLDOWN
+	shoot_timer.one_shot = true
+	shoot_timer.connect("timeout", Callable(self, "_on_shoot_cooldown_timeout"))
+	add_child(shoot_timer)
 
 func _input(event):
 	if event.is_action_pressed("leftclick"):
@@ -47,7 +59,7 @@ func _unhandled_input(event):
 func _physics_process(delta):
 	if position.y <= -100:
 		position.y = 100
-	
+
 	# Update UI labels
 	health_label.text = "Health: " + str(player_health)
 	money_label.text = "Coins: " + str(player_money)
@@ -60,7 +72,7 @@ func _physics_process(delta):
 
 	var input_dir = Input.get_vector("left", "right", "forward", "backward")
 	var direction = (cam.global_transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	
+
 	if direction:
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
@@ -69,13 +81,19 @@ func _physics_process(delta):
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
 	move_and_slide()
-	
-	if Input.is_action_pressed("leftclick"):
+
+	if Input.is_action_just_pressed("leftclick"):
 		if current_weapon == "pistol":
-			timer.wait_time = 0.01  
-			shoot_projectile()
+			if can_shoot:
+				can_shoot = false
+				animpistol.play("shoot")
+				shoot_projectile()
+				shoot_timer.start()
 		elif current_weapon == "wrench":
 			place_tower()
+
+func _on_shoot_cooldown_timeout():
+	can_shoot = true
 
 func switch_weapon(new_weapon: String):
 	current_weapon = new_weapon
@@ -88,16 +106,15 @@ func update_weapon():
 		wrench.visible = (current_weapon == "wrench")
 	if blue_filter:
 		blue_filter.visible = (current_weapon == "wrench")
-# Add to playerscript
+
 func take_damage(amount: int):
 	player_health -= amount
 	health_label.text = "Health: " + str(player_health)
-	
+
 	if player_health <= 0:
-		get_tree().reload_current_scene()  # Or your game over logic
+		get_tree().reload_current_scene()
 
 func die():
-	# Handle player death (reload scene? show game over?)
 	get_tree().reload_current_scene()
 
 func shoot_projectile():
@@ -122,23 +139,23 @@ func place_tower():
 		if player_money >= 10:
 			player_money -= 10
 			money_label.text = "Coins: " + str(player_money)
-			
+
 			var tower = TOWER_SCENE.instantiate()
 			get_tree().current_scene.add_child(tower)
-			
+
 			if not tower.is_inside_tree():
 				print("Tower placement failed!")
 				return
-				
+
 			var ray_origin = cam.global_position
 			var ray_direction = -cam.global_transform.basis.z.normalized()
 			var space_state = get_world_3d().direct_space_state
 			var query = PhysicsRayQueryParameters3D.create(
-				ray_origin, 
+				ray_origin,
 				ray_origin + ray_direction * 10
 			)
 			query.exclude = [self]
-			
+
 			var ray_result = space_state.intersect_ray(query)
 			if ray_result:
 				tower.global_transform.origin = ray_result.position
