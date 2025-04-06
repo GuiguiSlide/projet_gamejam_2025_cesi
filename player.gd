@@ -4,6 +4,9 @@ const SPEED = 10.0
 const JUMP_VELOCITY = 4.5
 const MOUSE_SENS = 0.25
 const PROJECTILE_SCENE = preload("res://projectile.tscn")
+@export var shootsound : AudioStream = preload("res://sons/fast_shot.mp3")
+@export var main_menu : AudioStream = preload("res://sons/aquatower_song.mp3")
+@export var towerplace : AudioStream = preload("res://sons/tour_placement.mp3")
 @export var tower_scenes : Array = []  # Array for tower scenes
 const SHOOT_COOLDOWN = 0.3  # seconds between shots
 
@@ -22,6 +25,7 @@ var current_weapon = "pistol"
 var can_shoot = true
 var shoot_timer: Timer
 var current_tower_index = 0  # Tracks the selected tower index
+var main_music = load("res://sons/aquatower_song.mp3")
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -32,14 +36,15 @@ func _ready():
 	money_label.text = "Coins: " + str(player_money)
 	health_label.text = "Health: " + str(player_health)
 
-	# Create and configure shoot cooldown timer
-	shoot_timer = Timer.new()
-	shoot_timer.wait_time = SHOOT_COOLDOWN
-	shoot_timer.one_shot = true
-	shoot_timer.connect("timeout", Callable(self, "_on_shoot_cooldown_timeout"))
-	add_child(shoot_timer)
+	# Create and configure shoot cooldown timer if it doesn't exist
+	if not shoot_timer:
+		shoot_timer = Timer.new()
+		shoot_timer.wait_time = SHOOT_COOLDOWN
+		shoot_timer.one_shot = true
+		shoot_timer.connect("timeout", Callable(self, "_on_shoot_cooldown_timeout"))
+		add_child(shoot_timer)
 
-	# Ensure the tower_scenes array is populated in the editor
+	# Ensure the tower_scenes array is populated in the editor if empty
 	if tower_scenes.is_empty():
 		tower_scenes = [
 			preload("res://sharktower.tscn"),
@@ -48,6 +53,13 @@ func _ready():
 			preload("res://sharktower.tscn"),
 			preload("res://squidtower.tscn"),
 		]
+
+	# Play the background music
+	var main_music_player = AudioStreamPlayer.new()
+	add_child(main_music_player)
+	main_music_player.stream = main_menu
+	main_music_player.play()
+
 
 func _input(event):
 	if event.is_action_pressed("leftclick"):
@@ -106,9 +118,14 @@ func _physics_process(delta):
 
 	if Input.is_action_just_pressed("leftclick"):
 		if current_weapon == "pistol":
+			var shoot_music_player = AudioStreamPlayer.new()
+			add_child(shoot_music_player)
+			shoot_music_player.stream = shootsound
+			shoot_music_player.play() 
 			if can_shoot:
 				can_shoot = false
 				animpistol.play("shoot")
+# Play the shooting sound
 				shoot_projectile()
 				shoot_timer.start()
 		elif current_weapon == "wrench":
@@ -158,18 +175,21 @@ func shoot_projectile():
 	var spawn_pos = pistol.global_position + (-pistol.global_transform.basis.z * 0.5)
 	var cam_forward = -cam.global_transform.basis.z.normalized()
 	projectile.global_transform.origin = spawn_pos
-	
-	# Align the projectile's rotation to the camera's rotation
+
 	projectile.look_at(projectile.global_transform.origin + cam_forward, Vector3.UP)
 
-	# Apply the velocity along the camera's forward vector
 	projectile.linear_velocity = cam_forward * 50
+
 
 func place_tower():
 	if wrench:
 		if player_money >= 25:
 			player_money -= 25
 			money_label.text = "Coins: " + str(player_money)
+			var tower_music_player = AudioStreamPlayer.new()
+			add_child(tower_music_player)
+			tower_music_player.stream = towerplace
+			tower_music_player.play() # Play the shooting sound
 
 			var tower = tower_scenes[current_tower_index].instantiate()
 			get_tree().current_scene.add_child(tower)

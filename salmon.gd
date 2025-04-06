@@ -47,7 +47,6 @@ func die():
 		player.add_money(10)  # Give the player 10 money upon monster death
 	queue_free()
 
-
 func take_damage(amount: int):
 	health -= amount
 	print("Enemy took", amount, "damage. Remaining:", health)
@@ -66,7 +65,6 @@ func _physics_process(delta):
 				push_error("Player or take_damage() method not found!")
 			queue_free()
 		return
-
 	anim.play("walk")
 	var instr = instructions[current_instruction]
 	match instr.type:
