@@ -4,7 +4,9 @@ extends Node3D
 @onready var anim = $StaticBody3D/blockbench_export/AnimationPlayer
 
 var speed = 1.0
-var has_reached_end = false  # Flag to track path completion
+var has_reached_end = false
+var health = 30  # Enemy health
+
 var instructions = [
 	{"type": "move", "distance": 12},
 	{"type": "turn", "angle": 90},
@@ -42,20 +44,25 @@ func _ready():
 func die():
 	queue_free()
 
+func take_damage(amount: int):
+	health -= amount
+	print("Enemy took", amount, "damage. Remaining:", health)
+	if health <= 0:
+		die()
+
 func _physics_process(delta):
 	if current_instruction >= instructions.size():
 		if !has_reached_end:
 			has_reached_end = true
-			print("dmgtaken")
-			# Get player reference properly
+			print("Enemy reached the end!")
 			var player = get_tree().get_first_node_in_group("player")
 			if player and player.has_method("take_damage"):
 				player.take_damage(10)
 			else:
 				push_error("Player or take_damage() method not found!")
-			queue_free()  # Remove enemy after completing path
+			queue_free()
 		return
-	
+
 	anim.play("walk")
 	var instr = instructions[current_instruction]
 	match instr.type:

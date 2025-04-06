@@ -28,7 +28,7 @@ shape = SubResource("BoxShape3D_vgmt7")
 unique_name_in_owner = true
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
-[node name="DetectionArea" type="Area3D" parent="."]
+[node name="DetectionArea" type="Area3D" parent="." groups=["enemy"]]
 unique_name_in_owner = true
 collision_mask = 4
 

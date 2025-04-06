@@ -1,18 +1,30 @@
-[gd_scene load_steps=4 format=3 uid="uid://d3804bbj5koec"]
+[gd_scene load_steps=5 format=3 uid="uid://d3804bbj5koec"]
 
 [ext_resource type="Script" uid="uid://dkoc1p3bdeab8" path="res://enemypath.gd" id="1_v43gg"]
 [ext_resource type="PackedScene" uid="uid://c4tdw56473uoc" path="res://modele/fishlv6.gltf" id="2_d3rs6"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_8xmgw"]
-radius = 4.0
+radius = 2.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_v43gg"]
+radius = 3.0
 
 [node name="Node3D" type="Node3D" groups=["enemy"]]
 script = ExtResource("1_v43gg")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 collision_layer = 4
+collision_mask = 3
 
 [node name="blockbench_export" parent="StaticBody3D" instance=ExtResource("2_d3rs6")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1.00869, 0, 0, 0, 1.00869, 0, 0, 0, 1.00869, 0, 0, 0)
 shape = SubResource("SphereShape3D_8xmgw")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 255
+collision_mask = 255
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_v43gg")
