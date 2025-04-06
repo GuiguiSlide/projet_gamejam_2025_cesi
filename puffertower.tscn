@@ -11,7 +11,7 @@ size = Vector3(1, 0.412598, 1)
 [sub_resource type="SphereShape3D" id="SphereShape3D_a1rps"]
 radius = 3.0
 
-[node name="Tower" type="Node3D"]
+[node name="Node3D" type="Node3D"]
 script = ExtResource("1_xa6cp")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
@@ -25,6 +25,7 @@ transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.692917, 0)
 shape = SubResource("BoxShape3D_vgmt7")
 
 [node name="blockbench_export" parent="StaticBody3D" instance=ExtResource("2_btnya")]
+unique_name_in_owner = true
 
 [node name="DetectionArea" type="Area3D" parent="."]
 unique_name_in_owner = true
@@ -32,3 +33,5 @@ collision_mask = 4
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DetectionArea"]
 shape = SubResource("SphereShape3D_a1rps")
+
+[connection signal="area_shape_entered" from="DetectionArea" to="." method="_on_detection_area_area_shape_entered"]

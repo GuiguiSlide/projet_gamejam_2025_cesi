@@ -35,7 +35,7 @@ func duplicate_child():
 	if mob_scenes.size() > 0:
 		var mob_scene
 		# Pick a random mob scene
-		var random_index = randi() % mob_scenes.size()
+		var _random_index = randi() % mob_scenes.size()
 		if curwave==1:
 			if enemywave==7:
 				enemywave=0
