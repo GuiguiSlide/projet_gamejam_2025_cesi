@@ -54,9 +54,9 @@ func _ready():
 
 	if tower_scenes.is_empty():
 		tower_scenes = [
+			preload("res://puffertower.tscn"),
 			preload("res://sharktower.tscn"),
 			preload("res://eeltower.tscn"),
-			preload("res://puffertower.tscn"),
 			preload("res://sharktower.tscn"),
 			preload("res://squidtower.tscn"),
 		]
