@@ -1,13 +1,13 @@
 # projet_gamejam_2025_cesi
--Theme: Tower-Defence.
--Status(Finished the 06/04/2025)
+- Theme: Tower-Defence.
+- Status(Finished the 06/04/2025)
 # Game
--Tower defence,FPS.(wanna be roguelike) 
--Theme around a aquatic apocalypse.
+- Tower defence,FPS.(wanna be roguelike) 
+- Theme around a aquatic apocalypse.
 # developers
--Guillaume Beaufort(@GuiguiSlide).
--Rosy Tanguy(@rosy-tng).
-Tom Dutilh(trap2game).
+- Guillaume Beaufort(@GuiguiSlide/Backend).
+- Rosy Tanguy(@rosy-tng/Sound_Designer).
+- Tom Dutilh(@trap2game/Frontend).
 # tools
 -Godot.
 # preview
