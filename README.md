@@ -9,7 +9,9 @@
 - Rosy Tanguy(@rosy-tng/Sound_Designer).
 - Tom Dutilh(@trap2game/Frontend).
 # tools
--Godot.
+- Godot.
+- Github.
+- Blockbench.
 # preview
 ![towers](https://github.com/GuiguiSlide/projet_gamejam_2025_cesi/blob/main/imgs/towers.png)
 ![wavepreview](https://github.com/GuiguiSlide/projet_gamejam_2025_cesi/blob/main/imgs/wavelook.png)
