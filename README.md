@@ -11,6 +11,6 @@ Tom Dutilh(trap2game).
 # tools
 -Godot.
 # preview
-![towers](https://github.com/GuiguiSlide/Untrustpilot/blob/main/imgs/towers.png)
-![wavepreview](https://github.com/GuiguiSlide/Untrustpilot/blob/main/imgs/wavelook.png)
-![towers](https://github.com/GuiguiSlide/Untrustpilot/blob/main/imgs/gungameplay.png)
+![towers](https://github.com/GuiguiSlide/projet_gamejam_2025_cesi/blob/main/imgs/towers.png)
+![wavepreview](https://github.com/GuiguiSlide/projet_gamejam_2025_cesi/blob/main/imgs/wavelook.png)
+![towers](https://github.com/GuiguiSlide/projet_gamejam_2025_cesi/blob/main/imgs/gungameplay.png)
