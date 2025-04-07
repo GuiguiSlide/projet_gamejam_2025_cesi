@@ -1,6 +1,7 @@
 # projet_gamejam_2025_cesi
 - Theme: Tower-Defence.
 - Status(Finished the 06/04/2025)
+- If you want to play:![game](https://github.com/GuiguiSlide/projet_gamejam_2025_cesi/blob/main/game_jam_2025(team%20GitHome%20Forksy%20ToMerge).exe)
 # Game
 - Tower defence,FPS.(wanna be roguelike) 
 - Theme around a aquatic apocalypse.
